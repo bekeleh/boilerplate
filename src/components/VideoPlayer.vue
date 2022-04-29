@@ -5,12 +5,14 @@
 <script setup>
 import { ref, reactive, onMounted, nextTick } from "vue";
 import ArtPlayer from "artplayer";
-import videoUrl from "../assets/sample/video.mp4";
+// import videoUrl from "../assets/sample/video.mp4";
 import posturl from "../assets/sample/poster.jpg";
 // import subtitleUrl from "../assets/sample/subtitle.srt";
 import thumbnailsUrl from "../assets/sample/thumbnail.png";
 import ploadingUrl from "../assets/img/ploading.gif";
 import stateUrl from "../assets/img/state.png";
+
+const videoUrl = "https://artplayer.org/assets/sample/video.mp4";
 
 const options = reactive({
   url: videoUrl,
