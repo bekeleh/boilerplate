@@ -1,5 +1,7 @@
 <template>
-  <div ref="player" class="m-3" style="width: 600px; height: 400px"></div>
+  <div>
+    <div ref="player" class="m-3" style="width: 600px; height: 400px"></div>
+  </div>
 </template>
 
 <script setup>
