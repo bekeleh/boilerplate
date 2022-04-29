@@ -12,6 +12,8 @@ import thumbnailsUrl from "../assets/sample/thumbnail.png";
 import ploadingUrl from "../assets/img/ploading.gif";
 import stateUrl from "../assets/img/state.png";
 const videoUrl = "https://artplayer.org/assets/sample/video.mp4";
+// const customLayer = "https://via.placeholder.com/100x150.png?text=Custom+Layer";
+const customLayer = "";
 const options = reactive({
   url: videoUrl,
   title: "This is the video title",
@@ -27,22 +29,19 @@ const options = reactive({
   setting: true,
   loop: true,
   flip: true,
-  rotate: true,
   playbackRate: true,
   aspectRatio: true,
   fullscreen: true,
   fullscreenWeb: true,
   subtitleOffset: true,
   miniProgressBar: true,
-  localVideo: true,
-  localSubtitle: true,
-  networkMonitor: false,
   mutex: true,
-  light: true,
   backdrop: true,
-  info: true,
-  theme: "#ffad00",
-  lang: navigator.language.toLocaleLowerCase(),
+  playsInline: true,
+  autoPlayback: true,
+  theme: "#23ade5",
+  lang: navigator.language.toLowerCase(),
+  whitelist: ["*"],
   moreVideoAttr: {
     crossOrigin: "anonymous",
   },
@@ -51,21 +50,20 @@ const options = reactive({
       html: "Context menu 1",
       click: function (contextmenu) {
         console.info("You clicked on the Context menu 1");
-        // contextmenu.show = false,
+        contextmenu.show = true;
       },
     },
     {
       html: "Context menu 2",
       click: function (contextmenu) {
         console.info("You clicked on the Context menu 2");
-        // contextmenu.show = false,
+        contextmenu.show = true;
       },
     },
   ],
   layers: [
     {
-      //   html: '<img src="https://via.placeholder.com/100x150.png?text=Custom+Layer" style="width:100px;">',
-      html: "",
+      html: `<img src="${customLayer}" style="width:100px;">`,
       click: function () {
         console.info("You clicked on the custom layer");
       },
@@ -144,8 +142,8 @@ const options = reactive({
     },
   ],
   icons: {
-    loading: '<img src="/src/assets/img/ploading.gif">',
-    state: '<img src="/src/assets/img/state.png">',
+    loading: `<img src="${ploadingUrl}">`,
+    state: `<img src="${stateUrl}">`,
   },
 });
 const player = ref("");
