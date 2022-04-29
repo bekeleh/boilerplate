@@ -11,9 +11,7 @@ import posturl from "../assets/sample/poster.jpg";
 import thumbnailsUrl from "../assets/sample/thumbnail.png";
 import ploadingUrl from "../assets/img/ploading.gif";
 import stateUrl from "../assets/img/state.png";
-
 const videoUrl = "https://artplayer.org/assets/sample/video.mp4";
-
 const options = reactive({
   url: videoUrl,
   title: "This is the video title",
@@ -150,7 +148,6 @@ const options = reactive({
     state: '<img src="/src/assets/img/state.png">',
   },
 });
-
 const player = ref("");
 onMounted(() => {
   nextTick(() => {
