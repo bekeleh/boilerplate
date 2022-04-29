@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="items-center justify-center">
     <div ref="player" class="m-3" style="width: 600px; height: 400px"></div>
   </div>
 </template>
@@ -7,7 +7,6 @@
 <script setup>
 import { ref, reactive, onMounted, nextTick } from "vue";
 import ArtPlayer from "artplayer";
-// import videoUrl from "../assets/sample/video.mp4";
 import posturl from "../assets/sample/poster.jpg";
 // import subtitleUrl from "../assets/sample/subtitle.srt";
 import thumbnailsUrl from "../assets/sample/thumbnail.png";
@@ -93,7 +92,7 @@ const options = reactive({
   thumbnails: {
     url: thumbnailsUrl,
     number: 100,
-    width: 160,
+    width: 300,
     height: 90,
     column: 10,
   },
@@ -107,23 +106,23 @@ const options = reactive({
   },
   highlight: [
     {
-      time: 60,
+      time: 10,
       text: "Chapter 1, Intro",
     },
     {
-      time: 120,
+      time: 20,
       text: "Chapter 2, Characters",
     },
     {
-      time: 180,
+      time: 30,
       text: "Chapter 3, Objects",
     },
     {
-      time: 240,
+      time: 40,
       text: "Chapter 4, View",
     },
     {
-      time: 300,
+      time: 60,
       text: "Chapter 4, Finish",
     },
   ],
