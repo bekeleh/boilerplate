@@ -312,7 +312,7 @@
                                         >{{
                                             user
                                                 ? user.first_name +
-                                                  " " +
+                                                  ' ' +
                                                   user.middle_name
                                                 : null
                                         }}</span
@@ -372,9 +372,9 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref } from "vue";
-import { useStore } from "vuex";
-import { useRouter } from "vue-router";
+import { computed, onMounted, ref } from 'vue'
+import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 import {
     Dialog,
     DialogOverlay,
@@ -384,7 +384,7 @@ import {
     MenuItems,
     TransitionChild,
     TransitionRoot,
-} from "@headlessui/vue";
+} from '@headlessui/vue'
 import {
     BellIcon,
     ClockIcon,
@@ -400,66 +400,54 @@ import {
     InboxIcon,
     HomeIcon,
     SearchIcon,
-} from "@heroicons/vue/outline";
+} from '@heroicons/vue/outline'
 import {
     ChevronDownIcon,
     UsersIcon,
     TagIcon,
     UserAddIcon,
     LocationMarkerIcon,
-} from "@heroicons/vue/solid";
-import { useAbility } from "@casl/vue";
+} from '@heroicons/vue/solid'
+import { useAbility } from '@casl/vue'
 
 const statusStyles = {
-    success: "bg-green-100 text-green-800",
-    processing: "bg-yellow-100 text-yellow-800",
-    failed: "bg-gray-100 text-gray-800",
-};
+    success: 'bg-green-100 text-green-800',
+    processing: 'bg-yellow-100 text-yellow-800',
+    failed: 'bg-gray-100 text-gray-800',
+}
 
-const store = useStore();
-const router = useRouter();
+const store = useStore()
+const router = useRouter()
 const currentRoute = computed(() => {
-    return router.currentRoute.value.name;
-});
-const { can } = useAbility();
-const sidebarOpen = ref(false);
-const logo = "/img/etlogo2.png";
-const avatar = "/img/etavatar.svg";
-const currentPage = ref("All Tickets");
+    return router.currentRoute.value.name
+})
+const { can } = useAbility()
+const sidebarOpen = ref(false)
+const logo = '/img/etlogo2.png'
+const avatar = '/img/etavatar.svg'
+const currentPage = ref('All Tickets')
 
-const notifications = computed(() => {
-    return store.getters["adminNotification/getNotifications"] ?? [];
-});
+// const notifications = computed(() => {
+//     return store.getters["adminNotification/getNotifications"] ?? [];
+// });
 
 const user = computed(() => {
-    return localStorage.getItem("user")
-        ? JSON.parse(localStorage.getItem("user"))
-        : "";
-});
-
-onMounted(
-    store.dispatch("adminAuth/checkToken").then(
-        (response) => {},
-
-        (error) => {}
-    ),
-    store.dispatch("adminNotification/fetchNotification").then(
-        (response) => {},
-        (error) => {}
-    )
-);
+    return localStorage.getItem('user')
+        ? JSON.parse(localStorage.getItem('user'))
+        : ''
+})
 
 function logout() {
-    store.dispatch("adminAuth/logout").then(
+    store.dispatch('adminAuth/logout').then(
         (response) => {
             if (response.data.success) {
-                localStorage.removeItem("user");
-                localStorage.removeItem("userToken");
-                router.push({ name: "admin.login" });
+                localStorage.removeItem('user')
+                localStorage.removeItem('userToken')
+                router.push({ name: 'admin.login' })
             }
         },
         (error) => {}
-    );
+    )
 }
 
 function handleNotificationClicked(routePage, id, slug) {
@@ -470,214 +458,45 @@ function handleNotificationClicked(routePage, id, slug) {
             slug: slug,
             prevPage: currentRoute.value,
         },
-    });
+    })
 }
 function settings() {
-    router.push({ name: "admin.settings" });
+    router.push({ name: 'admin.settings' })
 }
 
 function markUsRead() {
-    store.dispatch("adminNotification/markUsRead").then(
+    store.dispatch('adminNotification/markUsRead').then(
         (response) => {},
         (error) => {}
-    );
+    )
 }
 
 const navigation = [
     {
-        name: "Home",
-        href: "/",
+        name: 'Home',
+        href: '/',
         icon: HomeIcon,
         current: true,
-        permission: true,
     },
-    {
-        name: "Search",
-        href: "/admin/tickets/search",
-        icon: SearchIcon,
-        current: true,
-        permission: can("view", "ticket"),
-    },
-    {
-        name: "Dashboard",
-        href: "/admin/dashboard",
-        icon: DocumentReportIcon,
-        current: true,
-        permission: can("view", "dashboard"),
-    },
-    {
-        name: "Recent",
-        href: "/admin/tickets/recent",
-        icon: ClockIcon,
-        current: false,
-        permission: can("assign", "ticket"),
-    },
-    {
-        name: "Assigned to",
-        href: "/admin/tickets/assigned",
-        icon: TagIcon,
-        current: false,
-        permission: can("assign", "ticket"),
-    },
-    {
-        name: "Closed",
-        href: "/admin/tickets/closed",
-        icon: ArchiveIcon,
-        current: false,
-        permission: can("access", "ticket"),
-    },
-    {
-        name: "Approval Tickets",
-        href: "/admin/tickets/approval",
-        icon: ShieldCheckIcon,
-        current: false,
-        permission: can("approve", "ticket"),
-    },
-    {
-        name: "My Tickets",
-        href: "/admin/tickets/my",
-        icon: ViewListIcon,
-        current: false,
-        permission: can("verify", "ticket"),
-    },
-    {
-        name: "Users",
-        href: "/admin/users",
-        icon: UserAddIcon,
-        current: false,
-        permission: can("view", "user"),
-    },
-    {
-        name: "Roles",
-        href: "/admin/roles",
-        icon: UsersIcon,
-        current: false,
-        permission: can("view", "role"),
-    },
-    {
-        name: "Permissions",
-        href: "/admin/permissions",
-        icon: UsersIcon,
-        current: false,
-        permission: can("view", "permission"),
-    },
-    {
-        name: "Categories",
-        href: "/admin/categories",
-        icon: CogIcon,
-        current: false,
-        permission: can("view", "category"),
-    },
-    {
-        name: "Statuses",
-        href: "/admin/statuses",
-        icon: CogIcon,
-        current: false,
-        permission: can("view", "status"),
-    },
-    {
-        name: "Priorities",
-        href: "/admin/priorities",
-        icon: CogIcon,
-        current: false,
-        permission: can("view", "priority"),
-    },
-    {
-        name: "Requisition Services",
-        href: "/admin/requisitions",
-        icon: CogIcon,
-        current: false,
-        permission: can("view", "requisition"),
-    },
-    {
-        name: "Requisition Requirements",
-        href: "/admin/requisition-requirements",
-        icon: CogIcon,
-        current: false,
-        permission: can("view", "requisition-requirement"),
-    },
-    {
-        name: "Services",
-        href: "/admin/services",
-        icon: CogIcon,
-        current: false,
-        permission: can("view", "service"),
-    },
-    {
-        name: "Service Approvers",
-        href: "/admin/service-approvers",
-        icon: CogIcon,
-        current: false,
-        permission: can("view", "service-approver"),
-    },
-    {
-        name: "Requirements",
-        href: "/admin/requirements",
-        icon: CogIcon,
-        current: false,
-        permission: can("view", "requirement"),
-    },
-    {
-        name: "Regions",
-        href: "/admin/regions",
-        icon: LocationMarkerIcon,
-        current: false,
-        permission: can("view", "region"),
-    },
-    {
-        name: "Zones",
-        href: "/admin/zones",
-        icon: LocationMarkerIcon,
-        current: false,
-        permission: can("view", "zone"),
-    },
-    {
-        name: "Woredas",
-        href: "/admin/woredas",
-        icon: LocationMarkerIcon,
-        current: false,
-        permission: can("view", "woreda"),
-    },
-    {
-        name: "Clients",
-        href: "/admin/clients",
-        icon: UserGroupIcon,
-        current: false,
-        permission: can("view", "client"),
-    },
-    {
-        name: "FAQ",
-        href: "/admin/faqs",
-        icon: DocumentReportIcon,
-        current: false,
-        permission: can("view", "faq"),
-    },
-    {
-        name: "Reports",
-        href: "/admin/reports",
-        icon: DocumentReportIcon,
-        current: false,
-        permission: can("view", "report"),
-    },
-];
+]
 const secondaryNavigation = [
     {
-        name: "Settings",
-        href: "/admin/settings",
+        name: 'Settings',
+        href: '/admin/settings',
         icon: CogIcon,
-        permission: can("view", "settings"),
+        permission: can('view', 'settings'),
     },
     {
-        name: "Help",
-        href: "#",
+        name: 'Help',
+        href: '#',
         icon: QuestionMarkCircleIcon,
-        permission: can("view", "help"),
+        permission: can('view', 'help'),
     },
     {
-        name: "Privacy",
-        href: "#",
+        name: 'Privacy',
+        href: '#',
         icon: ShieldCheckIcon,
-        permission: can("view", "privacy"),
+        permission: can('view', 'privacy'),
     },
-];
+]
 </script>

@@ -56,7 +56,7 @@
                                 for="toggle"
                                 @click="toggle"
                             >
-                                {{ showPassword ? "hide" : "show" }}
+                                {{ showPassword ? 'hide' : 'show' }}
                             </label>
                             <VeeField
                                 id="password"
@@ -86,7 +86,7 @@
                                 for="toggle"
                                 @click="toggle"
                             >
-                                {{ showPassword ? "hide" : "show" }}
+                                {{ showPassword ? 'hide' : 'show' }}
                             </label>
                             <VeeField
                                 id="password_confirmation"
@@ -115,8 +115,8 @@
     </div>
 </template>
 <script>
-import SuccessAlert from "../../alerts/SuccessAlert";
-import ErrorAlert from "../../alerts/ErrorAlert.vue";
+import SuccessAlert from '../../alerts/SuccessAlert.vue'
+import ErrorAlert from '../../alerts/ErrorAlert.vue'
 
 export default {
     components: {
@@ -128,25 +128,25 @@ export default {
             showPassword: false,
             loading: false,
             submission: false,
-            alert_variant: "bg-red-500",
+            alert_variant: 'bg-red-500',
             alert_success_message: null,
             alert_error_message: null,
             schema: {
-                email: "required",
-                password: "required|min:8|max:32",
-                password_confirmation: "password_mismatch:@password",
+                email: 'required',
+                password: 'required|min:8|max:32',
+                password_confirmation: 'password_mismatch:@password',
             },
             user: {
-                email: "",
-                password: "",
-                password_confirmation: "",
+                email: '',
+                password: '',
+                password_confirmation: '',
             },
-        };
+        }
     },
     created() {},
     methods: {
         toggle() {
-            this.showPassword = !this.showPassword;
+            this.showPassword = !this.showPassword
         },
         changePassword(values, actions) {
             let data = {
@@ -154,43 +154,42 @@ export default {
                 password: values.password,
                 password_confirmation: values.password_confirmation,
                 token: this.$route.params.token,
-            };
-            this.submission = true;
-            this.loading = true;
-            this.$store.dispatch("clientAuth/resetPassword", data).then(
+            }
+            this.submission = true
+            this.loading = true
+            this.$store.dispatch('clientAuth/resetPassword', data).then(
                 (response) => {
-                    this.loading = false;
+                    this.loading = false
                     if (response.data && response.data.success) {
                         // this.alert_success_message = response.data.message;
                         // actions.resetForm(); // 👈 Reset Form
-                        this.redirect("client.signin");
+                        this.redirect('client.signin')
                     } else {
-                        this.alert_error_message = response.data.message;
+                        this.alert_error_message = response.data.message
                     }
                 },
                 (error) => {
-                    this.loading = false;
+                    this.loading = false
                     if (!error.response.data.success) {
-                        this.alert_success_message =
-                            error.response.data.message;
+                        this.alert_success_message = error.response.data.message
                     } else {
                         this.alert_success_message =
-                            "Whoops, looks like something went wrong";
+                            'Whoops, looks like something went wrong'
                     }
                 }
-            );
+            )
         },
         reset() {
-            this.user.password = "";
-            this.user.password_confirmation = "";
+            this.user.password = ''
+            this.user.password_confirmation = ''
         },
         handleDismissNotification() {
-            this.alert_success_message = null;
-            this.alert_error_message = null;
+            this.alert_success_message = null
+            this.alert_error_message = null
         },
         redirect(route) {
-            this.$router.push({ name: route });
+            this.$router.push({ name: route })
         },
     },
-};
+}
 </script>

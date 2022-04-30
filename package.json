@@ -1,21 +1,42 @@
 {
-  "name": "my-project",
-  "private": true,
-  "version": "0.0.0",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "artplayer": "^4.3.11",
-    "vue": "^3.2.25"
-  },
-  "devDependencies": {
-    "@vitejs/plugin-vue": "^2.3.1",
-    "autoprefixer": "^10.4.5",
-    "postcss": "^8.4.12",
-    "tailwindcss": "^3.0.24",
-    "vite": "^2.9.5"
-  }
+    "name": "my-project",
+    "private": true,
+    "version": "0.0.0",
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build",
+        "preview": "vite preview"
+    },
+    "dependencies": {
+        "@casl/ability": "^5.4.3",
+        "@casl/vue": "^2.1.2",
+        "@tailwindcss/forms": "^0.5.0",
+        "@vee-validate/rules": "^4.5.11",
+        "artplayer": "^4.3.11",
+        "axios": "^0.20.0-0",
+        "moment": "^2.29.3",
+        "vee-validate": "^4.5.8",
+        "vue": "^3.2.25",
+        "vue-i18n": "^9.1.9",
+        "vue-multiselect": "^3.0.0-alpha.2",
+        "vue-router": "^4.0.13",
+        "vuex": "^4.0.2",
+        "vuex-persistedstate": "^4.1.0"
+    },
+    "devDependencies": {
+        "@headlessui/vue": "^1.6.0",
+        "@heroicons/vue": "^1.0.6",
+        "@popperjs/core": "^2.11.0",
+        "@vitejs/plugin-vue": "^2.3.1",
+        "autoprefixer": "^10.4.5",
+        "eslint": "^7.14.0",
+        "eslint-config-prettier": "^8.3.0",
+        "eslint-plugin-prettier": "^4.0.0",
+        "eslint-plugin-vue": "^8.2.0",
+        "postcss": "^8.4.12",
+        "prettier": "2.5.1",
+        "tailwindcss": "^3.0.24",
+        "vite": "^2.9.5",
+        "vue-loader": "^16.8.3"
+    }
 }

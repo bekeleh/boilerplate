@@ -139,7 +139,7 @@
                                 for="toggle"
                                 @click="toggle"
                             >
-                                {{ showPassword ? "hide" : "show" }}
+                                {{ showPassword ? 'hide' : 'show' }}
                             </label>
                             <VeeField
                                 id="password"
@@ -173,7 +173,7 @@
                                 for="toggle"
                                 @click="toggle"
                             >
-                                {{ showPassword ? "hide" : "show" }}
+                                {{ showPassword ? 'hide' : 'show' }}
                             </label>
                             <VeeField
                                 id="password_confirmation"
@@ -216,7 +216,7 @@
     </div>
 </template>
 <script>
-import ErrorAlert from "../../alerts/ErrorAlert";
+import ErrorAlert from '../../alerts/ErrorAlert.vue'
 export default {
     components: { ErrorAlert },
     data() {
@@ -225,12 +225,12 @@ export default {
             loading: false,
             submission: false,
             show_alert: null,
-            alert_variant: "bg-red-500",
+            alert_variant: 'bg-red-500',
             alert_message: null,
-            value: "",
+            value: '',
             mobile_number: false,
             errors: [],
-        };
+        }
     },
     computed: {
         // acceptNumber() {
@@ -239,36 +239,36 @@ export default {
         // },
 
         loggedIn() {
-            return this.$store.state.clientAuth.status.loggedIn;
+            return this.$store.state.clientAuth.status.loggedIn
         },
         phone_rule_validate() {
-            return this.mobile_number;
+            return this.mobile_number
         },
     },
     mounted() {
         if (this.loggedIn) {
-            this.$router.push({ name: "home" });
+            this.$router.push({ name: 'home' })
         }
     },
     methods: {
         checkMobileNumber() {
             this.isNullOrEmpty(this.value)
                 ? (this.mobile_number = true)
-                : (this.mobile_number = false);
+                : (this.mobile_number = false)
         },
         acceptNumber() {
-            let x = this.value.replace(/\D/g, "").match(/(\d{0,5})(\d{0,5})/);
-            this.value = !x[2] ? x[1] : x[1] + (x[2] ? x[2] : "");
+            let x = this.value.replace(/\D/g, '').match(/(\d{0,5})(\d{0,5})/)
+            this.value = !x[2] ? x[1] : x[1] + (x[2] ? x[2] : '')
         },
         toggle() {
-            this.showPassword = !this.showPassword;
+            this.showPassword = !this.showPassword
         },
         onSubmit(values) {
             this.isNullOrEmpty(this.value)
                 ? (this.mobile_number = true)
-                : (this.mobile_number = false);
+                : (this.mobile_number = false)
             if (this.mobile_number) {
-                return;
+                return
             }
             let user = {
                 company_name: values.company_name,
@@ -277,46 +277,46 @@ export default {
                 password: values.password,
                 password_confirmation: values.password_confirmation,
                 phone: this.value,
-            };
+            }
 
-            this.loading = true;
-            this.submission = true;
+            this.loading = true
+            this.submission = true
 
-            this.$store.dispatch("clientAuth/register", user).then(
+            this.$store.dispatch('clientAuth/register', user).then(
                 (response) => {
-                    this.loading = false;
+                    this.loading = false
                     if (response.data.success) {
-                        this.redirect("client.activation.code");
+                        this.redirect('client.activation.code')
                     }
                     if (!response.data.success) {
-                        this.alert_message = response.data.message;
+                        this.alert_message = response.data.message
                     } else {
                         this.alert_message =
-                            "Whoops, looks like something went wrong";
+                            'Whoops, looks like something went wrong'
                     }
                 },
                 (err) => {
-                    this.loading = false;
-                    this.show_alert = true;
+                    this.loading = false
+                    this.show_alert = true
                     if (err.response.status === 422) {
-                        this.errors = err.response.data.errors;
+                        this.errors = err.response.data.errors
                     } else if (err.response.status === 429) {
                         this.alert_message =
-                            "Too many attempts, Please try again later";
+                            'Too many attempts, Please try again later'
                     } else if (err.response.status === 404) {
-                        this.alert_message = err.response.statusText;
+                        this.alert_message = err.response.statusText
                     }
                 }
-            );
+            )
         },
         redirect(route) {
-            return this.$router.push({ name: route });
+            return this.$router.push({ name: route })
         },
         cancelNotification() {
-            this.alert_message = "";
-            this.show_alert = "";
-            this.errors = [];
+            this.alert_message = ''
+            this.show_alert = ''
+            this.errors = []
         },
     },
-};
+}
 </script>

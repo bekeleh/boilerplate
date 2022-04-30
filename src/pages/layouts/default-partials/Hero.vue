@@ -1,120 +1,165 @@
 <template>
-    <div class="md:relative bg-et-green-light">
-        <main class="lg:relative">
-            <div
-                class="mx-auto max-w-7xl w-full pt-8 pb-20 text-center lg:py-16 lg:text-left"
-            >
-                <div class="px-4 lg:w-1/2 sm:px-8 xl:pr-16">
-                    <h1
-                        class="text-2xl tracking-tight font-bold text-gray-700 sm:text-2xl md:text-3xl lg:text-4xl xl:text-4xl"
-                    >
-                        <!-- partners management portal -->
-                        <span class="block xl:inline">
-                            Welcome to Ethio telecom online VAS partners
-                            management portal
-                        </span>
-                        {{ " " }}
-                    </h1>
-
-                    <h2
-                        class="lg:mt-8 text-2xl mt-3 tracking-tight font-bold text-gray-600 sm:text-2xl md:text-3xl lg:text-3xl xl:text-4xl"
-                    >
-                        <span class="block text-white xl:inline"
-                            >We're striving to enrich your online business</span
-                        >
-                    </h2>
-                </div>
-            </div>
-            <div
-                class="relative w-full lg:absolute lg:inset-y-0 lg:right-0 sm:right-1 lg:w-1/2 lg:h-full h-96"
-            >
-                <img
-                    class="absolute inset-0 w-full h-full object-fill"
-                    :src="heroImage"
-                    alt=""
-                />
-            </div>
-        </main>
-    </div>
-    <div class="md:relative bg-white">
-        <div class="mx-auto max-w-7xl w-full pt-16 pb-20 text-center lg:py-16">
-            <div
-                class="flex-1 mt-12 max-w-lg mx-auto grid gap-5 lg:grid-cols-3 lg:max-w-none"
-            >
-                <div
-                    v-for="feature in features"
-                    :key="feature.title"
-                    class="flex flex-col overflow-hidden"
-                >
-                    <div class="flex-shrink-0">
-                        <img
-                            v-if="feature.imageUrl"
-                            class="h-36 w-full object-fill"
-                            :src="feature.imageUrl"
-                            alt=""
-                        />
-                    </div>
-                    <div class="flex flex-1 px-6 py-3 flex-col justify-between">
-                        <div class="flex-1 text font-bold text-et-green-light">
-                            <a href="#" @click="serviceDetail(feature.slug)">
-                                {{ feature.name }}
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div>
+        <div ref="player" style="width: 600px; height: 400px"></div>
     </div>
 </template>
 
-<script>
-import axios from "axios";
-
-export default {
-    data() {
-        return {
-            heroImage: "/img/services.svg",
-            a2p: "/img/a2p.svg",
-            api: "/img/api.svg",
-            collocation: "/img/collocation.svg",
-            corporate_crbt: "/img/corporate_crbt.svg",
-            crbt: "/img/crbt.svg",
-            device_insturance: "/img/device_insurance.svg",
-            m2m: "/img/m2m.svg",
-            mo: "/img/mo.svg",
-            mt: "/img/mt.svg",
-            obd: "/img/obd.svg",
-            payment_api: "/img/payment_api.svg",
-            sms_np: "/img/sms_np.svg",
-            sms_premium: "/img/sms_premium.svg",
-            ussd_np: "/img/ussd_np.svg",
-            ussd_premium: "/img/ussd_premium.svg",
-            visp: "/img/visp.svg",
-            voice_np: "/img/voice_np.svg",
-            voice_premium: "/img/voice_premium.svg",
-            features: [],
-        };
+<script setup>
+import { ref, reactive, onMounted, nextTick } from 'vue'
+import ArtPlayer from 'artplayer'
+import posturl from '../../../assets/sample/poster.jpg'
+// import subtitleUrl from "../../../assets/sample/subtitle.srt";
+import thumbnailsUrl from '../../../assets/sample/thumbnail.png'
+import ploadingUrl from '../../../assets/img/ploading.gif'
+import stateUrl from '../../../assets/img/state.png'
+const videoUrl = 'https://artplayer.org/assets/sample/video.mp4'
+// const customLayer = "https://via.placeholder.com/100x150.png?text=Custom+Layer";
+const customLayer = ''
+const options = reactive({
+    url: videoUrl,
+    title: 'This is the video title',
+    poster: posturl,
+    volume: 0.5,
+    isLive: false,
+    muted: false,
+    autoplay: false,
+    pip: true,
+    autoSize: true,
+    autoMini: true,
+    screenshot: true,
+    setting: true,
+    loop: true,
+    flip: true,
+    playbackRate: true,
+    aspectRatio: true,
+    fullscreen: true,
+    fullscreenWeb: true,
+    subtitleOffset: true,
+    miniProgressBar: true,
+    mutex: true,
+    backdrop: true,
+    playsInline: true,
+    autoPlayback: true,
+    theme: '#23ade5',
+    lang: navigator.language.toLowerCase(),
+    whitelist: ['*'],
+    moreVideoAttr: {
+        crossOrigin: 'anonymous',
     },
-    created() {
-        this.fetchServices();
+    contextmenu: [
+        {
+            html: 'Context menu 1',
+            click: function (contextmenu) {
+                console.info('You clicked on the Context menu 1')
+                contextmenu.show = true
+            },
+        },
+        {
+            html: 'Context menu 2',
+            click: function (contextmenu) {
+                console.info('You clicked on the Context menu 2')
+                contextmenu.show = true
+            },
+        },
+    ],
+    layers: [
+        {
+            html: `<img src="${customLayer}" style="width:100px;">`,
+            click: function () {
+                console.info('You clicked on the custom layer')
+            },
+            style: {
+                position: 'absolute',
+                top: '20px',
+                right: '20px',
+                opacity: '.9',
+            },
+        },
+    ],
+    quality: [
+        {
+            default: true,
+            name: 'SD 480P',
+            url: videoUrl,
+            html: 'SD quality',
+        },
+        {
+            name: 'HD 720P',
+            url: videoUrl,
+            html: 'HD quality',
+        },
+    ],
+    thumbnails: {
+        url: thumbnailsUrl,
+        number: 100,
+        width: 300,
+        height: 90,
+        column: 10,
     },
-    methods: {
-        loadFAQ() {
-            this.$router.push({ name: "client.faqs" });
+    subtitle: {
+        url: '',
+        style: {
+            color: '#03A9F4',
         },
-        fetchServices() {
-            this.loading = true;
-            axios.get(`/api/v1/service_options`).then((res) => {
-                this.features = res.data.data;
-                this.loading = false;
-            });
-        },
-        serviceDetail(slug) {
-            this.$router.push({
-                name: "services.detail",
-                params: { slug: slug },
-            });
-        },
+        encoding: 'utf-8',
+        bilingual: true,
     },
-};
+    highlight: [
+        {
+            time: 10,
+            text: 'Chapter 1, Intro',
+        },
+        {
+            time: 20,
+            text: 'Chapter 2, Characters',
+        },
+        {
+            time: 30,
+            text: 'Chapter 3, Objects',
+        },
+        {
+            time: 40,
+            text: 'Chapter 4, View',
+        },
+        {
+            time: 60,
+            text: 'Chapter 4, Finish',
+        },
+    ],
+    controls: [
+        {
+            position: 'left',
+            html: 'Menu 1',
+            click: function () {
+                console.info('You clicked on the menu 1')
+            },
+        },
+        {
+            position: 'right',
+            html: 'Menu 2',
+            click: function () {
+                console.info('You clicked on the menu 2')
+            },
+        },
+    ],
+    icons: {
+        loading: `<img src="${ploadingUrl}">`,
+        state: `<img src="${stateUrl}">`,
+    },
+})
+const player = ref('')
+onMounted(() => {
+    nextTick(() => {
+        new ArtPlayer({
+            ...options,
+            container: player.value,
+        })
+    })
+})
+defineExpose({
+    player,
+    options,
+})
 </script>
+
+<style lang="scss" scoped></style>

@@ -5,35 +5,27 @@
 </template>
 
 <script>
-import HomeLayout from "./pages/layouts/HomeLayout";
-import DefaultLayout from "./pages/layouts/DefaultLayout";
-import UserLayout from "./pages/layouts/UserLayout";
-import ClientLayout from "./pages/layouts/ClientLayout";
-import AdminLayout from "./pages/layouts/AdminLayout";
-import AgentLayout from "./pages/layouts/AgentLayout";
+import HomeLayout from './pages/layouts/HomeLayout.vue'
+import DefaultLayout from './pages/layouts/DefaultLayout.vue'
+import { computed, ref } from 'vue'
+import { useRouter } from 'vue-router'
 export default {
     components: {
-        DefaultLayout,
         HomeLayout,
-        UserLayout,
-        ClientLayout,
-        AdminLayout,
-        AgentLayout,
+        DefaultLayout,
     },
     setup() {
+        const router = useRouter()
+        const layout = computed(() => {
+            return router.currentRoute.value.meta.layout
+                ? router.currentRoute.value.meta.layout
+                : 'home-layout'
+        })
         return {
-            defaultLayout: "home-layout",
-        };
+            layout,
+        }
     },
-    computed: {
-        layout() {
-            return this.$route.meta.layout
-                ? this.$route.meta.layout
-                : this.defaultLayout;
-        },
-    },
-    mounted() {},
-};
+}
 </script>
 
 <style scoped></style>

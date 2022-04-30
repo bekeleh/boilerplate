@@ -9,14 +9,14 @@
 </template>
 
 <script>
-import Navbar from "./default-partials/Navbar";
-import Footer from "./default-partials/Footer";
+import Navbar from './default-partials/Navbar.vue'
+import Footer from './default-partials/Footer.vue'
 export default {
     components: {
         Navbar,
         Footer,
     },
-};
+}
 </script>
 
 <style scoped></style>

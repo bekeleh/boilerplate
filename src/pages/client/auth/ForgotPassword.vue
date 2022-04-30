@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import ErrorAlert from "../../alerts/ErrorAlert.vue";
+import ErrorAlert from '../../alerts/ErrorAlert.vue'
 
 export default {
     components: {
@@ -66,15 +66,15 @@ export default {
             loading: false,
             submission: false,
             show_alert: null,
-            alert_variant: "bg-red-500",
+            alert_variant: 'bg-red-500',
             alert_message: null,
-            value: "",
+            value: '',
             mobile_number: false,
-        };
+        }
     },
     computed: {
         phone_rule_validate() {
-            return this.mobile_number;
+            return this.mobile_number
         },
     },
 
@@ -82,45 +82,45 @@ export default {
         checkMobileNumber() {
             this.isNullOrEmpty(this.value)
                 ? (this.mobile_number = true)
-                : (this.mobile_number = false);
+                : (this.mobile_number = false)
         },
         acceptNumber() {
-            let x = this.value.replace(/\D/g, "").match(/(\d{0,5})(\d{0,5})/);
-            this.value = !x[2] ? x[1] : x[1] + (x[2] ? x[2] : "");
+            let x = this.value.replace(/\D/g, '').match(/(\d{0,5})(\d{0,5})/)
+            this.value = !x[2] ? x[1] : x[1] + (x[2] ? x[2] : '')
         },
         onSubmit(values) {
             this.isNullOrEmpty(this.value)
                 ? (this.mobile_number = true)
-                : (this.mobile_number = false);
+                : (this.mobile_number = false)
             if (this.mobile_number) {
-                return;
+                return
             }
             let data = {
                 phone: this.value,
-            };
-            this.submission = true;
-            this.loading = true;
-            this.$store.dispatch("clientAuth/forgotPassword", data).then(
+            }
+            this.submission = true
+            this.loading = true
+            this.$store.dispatch('clientAuth/forgotPassword', data).then(
                 (response) => {
-                    this.loading = false;
+                    this.loading = false
                     if (response.data && response.data.success) {
-                        this.redirect("client.forgot.password.reset.code");
+                        this.redirect('client.forgot.password.reset.code')
                     } else if (!response.data.success) {
-                        this.show_alert = true;
-                        this.alert_message = response.data.message;
+                        this.show_alert = true
+                        this.alert_message = response.data.message
                     }
                 },
                 (error) => {
-                    this.loading = false;
-                    this.show_alert = true;
-                    this.alert_message = error.response.data.message;
+                    this.loading = false
+                    this.show_alert = true
+                    this.alert_message = error.response.data.message
                 }
-            );
+            )
         },
 
         redirect(route) {
-            this.$router.push({ name: route });
+            this.$router.push({ name: route })
         },
     },
-};
+}
 </script>
